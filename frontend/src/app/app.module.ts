@@ -1,3 +1,6 @@
+import * as Auth0 from 'auth0-web';
+import {CallbackComponent} from './callback.component';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -10,6 +13,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ExamsComponent} from './exams/exams.component';
 
 const appRoutes: Routes = [
+  { path: 'callback', component: CallbackComponent },
   { path: 'new-exam', component: ExamFormComponent },
   { path: '', component: ExamsComponent },
 ];
@@ -19,6 +23,7 @@ const appRoutes: Routes = [
     AppComponent,
     ExamFormComponent,
     ExamsComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,4 +36,13 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+    Auth0.configure({
+      domain: 'dev-7r5b50js.eu.auth0.com',
+      audience: 'https://online-exam.digituz.com.br',
+      clientID: 'I2qiVvELuTIb07EOtZGF3c8FUebAhbgT',
+      redirectUri: 'http://192.168.1.28:4200/callback',
+      scope: 'openid profile manage:exams'
+    });
+  }
 }
