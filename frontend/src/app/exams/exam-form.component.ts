@@ -3,18 +3,25 @@ import {HttpClient} from '@angular/common/http';
 import {ExamsApiService} from "./exams-api.service";
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: 'exam-form',
   template: `
     <div>
       <h2>New Exam</h2>
-      <label for="exam-title">Title</label>
-      <input id="exam-title" (keyup)="updateTitle($event)">
-      <label for="exam-description">Description</label>
-      <input id="exam-description" (keyup)="updateDescription($event)">
-      <button (click)="saveExam()">Save Exam</button>
+      <form ngNativeValidate #form>
+        <mat-form-field>
+        <mat-label for="exam-title">Title</mat-label>
+          <input matInput id="exam-title" (keyup)="updateTitle($event)" required>
+        </mat-form-field><br/>
+        <mat-form-field> 
+        <mat-label for="exam-description">Description</mat-label>
+        <input matInput id="exam-description" (keyup)="updateDescription($event)" required>
+        </mat-form-field><br/>
+        <button  mat-raised-button color="accent" (click)="form.checkValidity()? saveExam() : null">Save Exam</button>
+      </form>
     </div>
-  `
+    `
 })
 export class ExamFormComponent {
   exam = {

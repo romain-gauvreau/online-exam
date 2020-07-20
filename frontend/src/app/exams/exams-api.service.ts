@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import {API_URL} from '../env';
 import {Exam} from './exam.model';
 
-import * as Auth0 from 'auth0-web';
+// import * as Auth0 from 'auth0-web';
 
 @Injectable()
 export class ExamsApiService {
@@ -25,12 +25,22 @@ export class ExamsApiService {
   }
 
   saveExam(exam: Exam): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${Auth0.getAccessToken()}`
-      })
-    };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Authorization': `Bearer ${Auth0.getAccessToken()}`
+    //   })
+    // };
     return this.http
-      .post(`${API_URL}/exams`, exam, httpOptions);
+      .post(`${API_URL}/exams`, exam);
+  }
+
+  deleteExam(examId: number) {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Authorization': `Bearer ${Auth0.getAccessToken()}`
+    //   })
+    // };
+    return this.http
+      .delete(`${API_URL}/exams/${examId}`);
   }
 }
